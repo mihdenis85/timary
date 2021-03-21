@@ -1,3 +1,3 @@
-from Project.__main__ import run
+from Timary.__main__ import run
 
 run()
