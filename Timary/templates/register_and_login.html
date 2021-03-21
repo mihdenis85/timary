@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link href="../static/css/register.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4" style="margin: 0 2%;" >
+<div class="left-col">
+<h1> Форма регистрации </h1>
+    <form action="" method="post" class="form-w">
+    {{ form.hidden_tag() }}
+            {{ form.csrf_token }}
+            {% if message %}
+            <div class="text-register">{{message}}</div>
+            {% endif %}
+
+
+            {{ form.login(class="form-control") }}<br><br>
+            {% for error in form.login.errors %}
+                <p class="text-register" role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+
+            {{ form.name(class="form-control") }}<br><br>
+            {% for error in form.name.errors %}
+                <p class="text-register" role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+
+            {{ form.password(class="form-control") }}<br><br>
+            {% for error in form.password.errors %}
+                <p class="text-register" role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+
+            {{ form.email(class="form-control", type="email") }}<br><br>
+            {% for error in form.email.errors %}
+                <p class="text-register" role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+
+
+            {{ form.theme(class="form-control", type="email") }}
+            {% for error in form.theme.errors %}
+                <p class="text-register" role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+
+
+            {{ form.submit(type="submit", class="register-button") }}
+    </form>>
+
+
+</div>
+    <div class="right-col">
+                <h1> Форма авторизации </h1>
+                <form class="card-body" method="POST">
+                    {% if message %}
+            <div class="text">{{ message }}</div>
+            {% endif %}
+
+            {{ form.hidden_tag() }}
+
+            {% for error in form1.login.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+            <div class="form-group">
+                {{ form1.login(class="form-control") }}
+            </div>
+                    <br>
+
+            {% for error in form1.password.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+            <div class="form-group">
+                {{ form1.password(class="form-control") }}
+            </div>
+                    <br>
+
+
+            {{ form1.submit() }}
+                 </form>
+            </div>
+</div>
+
+{% endblock %}

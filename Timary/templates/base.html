@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <title>Timary project - официальный сайт</title>
+        <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Amatic+SC&family=Open+Sans&family=Raleway:wght@100&family=Roboto&display=swap" rel="stylesheet">
+        <meta name="keywords" content="школа обучение дистанционное образование расписание план Timary timary дневник блокнот ежедневник " />
+        {% block head %}
+        {% endblock %}
+    </head>
+    <body>
+        <header class="up-block">
+             <div class="fixed-container">
+                <nav class="up-text">
+                    <a href="/charactimetable.html" style="padding: 0 3% 0 0">+</a>
+                    <img src="../static/img/timetable.png" style="width: 5%; height: 5%; margin: auto 0";></img>
+                    <a href="#" style="padding: 0 3% 0 0"><u>Раcписание</u></a>
+                    <img src="../static/img/homework.png" style="width: 5%; height: 5%; margin: auto 0"></img>
+                    <a href="/homework.php" style="padding: 0 3% 0 0">Домашнее задание</a>
+                    <a href="/register"> Вход/Регистрация </a>
+                </nav>
+             </div>
+        </header>
+
+    {% block content %}
+        {% endblock %}
+    </body>
+</html>

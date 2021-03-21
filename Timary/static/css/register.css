@@ -1,0 +1,65 @@
+* {
+            font-family: 'Amatic SC';
+            }
+            html, body {
+                margin: 0;
+                padding: 0;
+            }
+            .fixed-container {
+                width: 100%;
+                margin: 0 auto;
+                height: 100%;
+                padding: 1% 0;
+            }
+            nav a {
+
+                font-size: 40px;
+                margin-right: 50px;
+                color: black;
+                text-decoration: none;
+                margin: auto 0;
+            }
+            .up-text {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                height: 100%;
+            }
+            .up-block {
+                height: 100%;
+                background-color: #FCE8B6;
+                align-items: center;
+                height: 100%;
+            }
+            .left-col{
+                padding: 5px;
+                float: left;
+                width: 200px;
+            }
+            .right-col {
+                padding: 5px;
+                float: left;
+                width: 200px;
+            }
+            #login {
+                height: 30px;
+                width: 176px;
+            }
+            #name {
+                height: 30px;
+                width: 176px;
+            }
+            #pass {
+                height: 30px;
+                width: 176px;
+            }
+            #email {
+                height: 30px;
+                width: 176px;
+            }
+            .akk {
+                font-size: 40px;
+            }
+            * {
+                --background color: #FCE8B6;
+            }

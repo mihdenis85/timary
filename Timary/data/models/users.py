@@ -14,6 +14,7 @@ class User(SqlAlchemyBase, UserMixin, SerializerMixin):
     name = Column(String)
     email = Column(String, index=True, unique=True)
     hashed_password = Column(String)
+    theme = Column(String)
 
 
     def set_password(self, password):
