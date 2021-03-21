@@ -18,6 +18,8 @@ class User(SqlAlchemyBase, UserMixin, SerializerMixin):
 
     timetable = orm.relation('Timetable', back_populates='user')
 
+    homework = orm.relation('Homework', back_populates='user')
+
 
     def set_password(self, password):
         self.hashed_password = generate_password_hash(password)

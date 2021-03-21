@@ -5,8 +5,8 @@ from flask import Flask, render_template, redirect, url_for, make_response, json
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
 from Timary.data import db_session
-from Timary.data.models import User
-from Timary.forms import RegisterForm, LoginForm, ChangeForm
+from Timary.data.models import User, Timetable
+from Timary.forms import RegisterForm, LoginForm, ChangeForm, TimetableForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'very_secret_key_jwkjldjwkdjlkwdkwjdldwhifwifhwiuhiuefhwiufhiuehf0f9wwefw'
@@ -109,6 +109,32 @@ def change():
                                    title='Твоя профессия')
     return render_template('change.html', form=change_form,
                                    title='Твоя профессия')
+
+
+@app.route('/homework')
+def homework():
+    return render_template('homework.html')
+
+
+@app.route('/add_timetable', methods=['GET', 'POST'])
+@login_required
+def add_timetable():
+    timetable_form = TimetableForm()
+    if timetable_form.validate_on_submit():
+        db = db_session.create_session()
+        timetable = Timetable()
+        timetable.lesson = timetable_form.lesson.data
+        timetable.room = timetable_form.room.data
+        timetable.begin = timetable_form.begin.data
+        timetable.end = timetable_form.end.data
+        timetable.day = timetable_form.day.data
+        current_user.timetable.append(timetable)
+        db.merge(current_user)
+        db.commit()
+        return redirect('/')
+    return render_template('add_timetable.html', form=timetable_form)
+
+
 
 '''
 @app.errorhandler(404)

@@ -4,8 +4,8 @@ from wtforms.validators import DataRequired
 
 
 class TimetableForm(FlaskForm):
-    lesson = StringField('Урок', validators=[DataRequired()], render_kw={"placeholder": "Урок"})
-    room = StringField('Кабинет', validators=[DataRequired()], render_kw={"placeholder": "Кабинет"})
+    lesson = StringField('Урок', validators=[DataRequired()], render_kw={"placeholder": "  Урок"})
+    room = StringField('Кабинет', validators=[DataRequired()], render_kw={"placeholder": "  Кабинет"})
     day = DateField('Дата', validators=[DataRequired()])
     begin = TimeField('Время начала', validators=[DataRequired()])
     end = TimeField('Время окончания', validators=[DataRequired()])
