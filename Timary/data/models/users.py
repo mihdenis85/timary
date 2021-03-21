@@ -1,5 +1,5 @@
 from flask_login import UserMixin
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, orm
 from sqlalchemy_serializer import SerializerMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -15,6 +15,8 @@ class User(SqlAlchemyBase, UserMixin, SerializerMixin):
     email = Column(String, index=True, unique=True)
     hashed_password = Column(String)
     theme = Column(String)
+
+    timetable = orm.relation('Timetable', back_populates='user')
 
 
     def set_password(self, password):
