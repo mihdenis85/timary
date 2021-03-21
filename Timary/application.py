@@ -5,8 +5,8 @@ from flask import Flask, render_template, redirect, url_for, make_response, json
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
 from Timary.data import db_session
-from Timary.data.models import User, Timetable
-from Timary.forms import RegisterForm, LoginForm, ChangeForm, TimetableForm
+from Timary.data.models import User, Timetable, Homework
+from Timary.forms import RegisterForm, LoginForm, ChangeForm, TimetableForm, HomeworkForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'very_secret_key_jwkjldjwkdjlkwdkwjdldwhifwifhwiuhiuefhwiufhiuehf0f9wwefw'
@@ -33,44 +33,49 @@ def reqister():
         return redirect('/')
     form = RegisterForm()
     login_form = LoginForm()
-    if form.validate_on_submit():
-        if len(form.password.data) < 6:
-            return render_template('register_and_login.html', title='Твоя профессия',
-                                   form=form, form1=login_form,
-                                   message="Пароль слишком короткий")
-        if form.password.data.isdigit() or form.password.data.isalpha():
-            return render_template('register_and_login.html', title='Твоя профессия',
-                                   form=form, form1=login_form,
-                                   message="Пароль должен содержать буквы и цифры")
-        db = db_session.create_session()
-        if db.query(User).filter(User.email == form.email.data).first() or \
-                db.query(User).filter(User.login == form.login.data).first():
-            return render_template('register_and_login.html', title='Твоя профессия',
-                                   form=form, form1=login_form,
-                                   message="Такой пользователь уже существует")
-        user = User(
-            login=form.login.data,
-            name=form.name.data,
-            email=form.email.data,
-            theme=form.theme.data
-        )
-        user.set_password(form.password.data)
-        db.add(user)
-        db.commit()
-        login_user(user, remember=True)
-        return redirect('/user_info')
+    print(form.password.data)
+    if form.password.data and form.login.data and form.name.data and form.email.data:
+        if form.validate_on_submit():
+            if len(form.password.data) < 6:
+                return render_template('register_and_login.html', title='Твоя профессия',
+                                       form=form, form1=login_form,
+                                       message="Проверьте пароль")
+            if form.password.data.isdigit() or form.password.data.isalpha():
+                return render_template('register_and_login.html', title='Твоя профессия',
+                                       form=form, form1=login_form,
+                                       message="Проверьте пароль")
+            if not form.login.data or not form.name.data or not form.email.data or not form.theme.data:
+                return render_template('register_and_login.html', form=form, form1=login_form, login_form=login_form,
+                                       message='Проверьте правильность заполнения полей')
+            db = db_session.create_session()
+            if db.query(User).filter(User.email == form.email.data).first() or \
+                    db.query(User).filter(User.login == form.login.data).first():
+                return render_template('register_and_login.html', title='Твоя профессия',
+                                       form=form, form1=login_form,
+                                       message="Такой пользователь уже существует")
+            user = User(
+                login=form.login.data,
+                name=form.name.data,
+                email=form.email.data,
+                theme=form.theme.data
+            )
+            user.set_password(form.password.data)
+            db.add(user)
+            db.commit()
+            login_user(user, remember=True)
+            return redirect('/user_info')
 
     if login_form.validate_on_submit():
         db = db_session.create_session()
         user = db.query(User).filter(User.login == login_form.login.data).first()
         if not user:
-            return render_template('register_and_login.html', form=form, form1=login_form, message="Такого пользователя не существует",
+            return render_template('register_and_login.html', form=form, form1=login_form, message1="Проверьте правильность заполнения полей",
                                    title='Твоя профессия')
         if user.check_password(login_form.password.data):
             login_user(user, remember=True)
             return redirect('/user_info')
         else:
-            return render_template('register_and_login.html', form=form, form1=login_form, message="Неправильный пароль", title='Твоя профессия')
+            return render_template('register_and_login.html', form=form, form1=login_form, message1="Проверьте пароль", title='Твоя профессия')
     return render_template('register_and_login.html', title='Твоя профессия', form=form, form1=login_form)
 
 
@@ -134,6 +139,24 @@ def add_timetable():
         return redirect('/')
     return render_template('add_timetable.html', form=timetable_form)
 
+
+@app.route('/add_homework', methods=['GET', 'POST'])
+@login_required
+def add_homework():
+    homework_form = HomeworkForm()
+    if homework_form.validate_on_submit():
+        db = db_session.create_session()
+        homework = Homework()
+        homework.task = homework_form.task.data
+        homework.lesson = homework_form.lesson.data
+        homework.end = homework_form.end.data
+        homework.ready = homework_form.ready.data
+        homework.file = homework_form.file.data
+        current_user.homework.append(homework)
+        db.merge(current_user)
+        db.commit()
+        return redirect('/')
+    return render_template('add_homework.html', form=homework_form)
 
 
 '''

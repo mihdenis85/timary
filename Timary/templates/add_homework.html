@@ -3,40 +3,64 @@
     <head>
         <meta charset="utf-8">
         <title>Timary project - официальный сайт</title>
-        <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="../static/img/favicon.ico" type="image/x-icon">
         <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link rel="stylesheet" href="../static/css/add_homework.css" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css2?family=Amatic+SC&family=Open+Sans&family=Raleway:wght@100&family=Roboto&display=swap" rel="stylesheet">
+
     </head>
     <body>
         <header class="up-block">
             <div class="fixed-container">
                 <nav class="up-text">
-                    <a href="homework.php" style="font-size: 30px;">< Назад</a>
-                   <img src="/img/homework.png" style="width: 6%; height: 6%;"></img>
-                   <img src="/img/delete.png" style="width: 4%; height: 4%;"></img>
+                    <a href="/homework" style="font-size: 30px;">< Назад</a>
+                   <img src="../static/img/homework.png" style="width: 5%; height: 5%;"></img>
+                   <img src="../static/img/delete.png" style="width: 3.5%; height: 3.5%;"></img>
                 </nav>
             </div>
         </header>
-        <form action="savehomework.php" method="post" enctype="multipart/form-data">
+        <form class="card-body" method="POST">
+                    {% if message %}
+            <div class="text">{{ message }}</div>
+            {% endif %}
+
+            {{ form.hidden_tag() }}
             <hr width="100%" size="2" color="#000000" />
             <br>
             <hr width="100%" size="2" color="#000000" />
-            <h1><input type="text" name="task" id="task" placeholder="  Задание" size="40" class="in-put"></h1>
+            <h1>
+                {% for error in form.task.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+            {{ form.task(class="in-put", size="40") }}
+            </h1>
             <hr width="100%" size="2" color="#000000" />
 
-            <h1><input type="text" name="lesson" id="lesson" placeholder="  Урок" size="40" class="in-put"></h1>
+            <h1>{% for error in form.lesson.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+            {{ form.lesson(class="in-put", size="40") }}</h1>
             <hr width="100%" size="2" color="#000000" />
-            <h1><input type="date" name="end" id="end" placeholder="  Дедлайн" size="40" class="in-put"></h1>
+            <h1>{% for error in form.end.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+            {{ form.end(class="in-put", size="40", type="date") }}</h1>
             <hr width="100%" size="2" color="#000000" />
 
 
             <br>
 
             <hr width="100%" size="2" color="#000000" />
-            <h1><input type="text" name="ready" id="ready" placeholder="  Готовность" size="40" class="in-put"></h1>
+            <h1>{% for error in form.ready.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+            {{ form.ready(class="in-put", size="40") }}</h1>
             <hr width="100%" size="2" color="#000000" />
             <h1><p class="text">Загрузить файлы:</p></h1>
-            <input type="file" name="file" style="padding-left: 15px">
+            {% for error in form.file.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+            {{ form.file(style="padding-left: 15px", type="file") }}
             <br>
             <button class="btn btn-success" name="submit">Добавить</button>
         </form>
