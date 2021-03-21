@@ -1,1 +1,1 @@
-web: gunicorn Project.__main__:app
+web: gunicorn Timary.__main__:app
