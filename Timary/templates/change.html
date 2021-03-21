@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link href="../static/css/register.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+<div class="left-col">
+    <h1>Форма изменения</h1>
+    <form class="card-body" method="POST">
+        {% if message %}
+        <div class="text">{{ message }}</div>
+        {% endif %}
+
+        {{ form.hidden_tag() }}
+
+        {% for error in form.login.errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+        <div class="form-group">
+            {{ form.login(class="form-control") }}
+        </div>
+                <br>
+
+
+        {% for error in form.name.errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+        <div class="form-group">
+            {{ form.name(class="form-control") }}
+        </div>
+                <br>
+
+        {% for error in form.password.errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+        <div class="form-group">
+            {{ form.password(class="form-control") }}
+        </div>
+                <br>
+
+
+        {{ form.submit() }}
+             </form>
+        </div>
+</div>
+{% endblock %}

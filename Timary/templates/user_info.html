@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link href="../static/css/register.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4" style="margin: 0 2%;" >
+<p class="akk">
+    <b> Имя: </b> {{ current_user.name }} <a href="/change"> Изменить </a> <br>
+    <b> Логин: </b> {{ current_user.login }} <a href="/change"> Изменить </a> <br>
+    <b> Email: </b> {{ current_user.email }} <a href="/change"> Изменить </a> <br>
+    <a href="/logout"> Выйти </a>
+</p>
+</div>
+
+{% endblock %}

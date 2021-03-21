@@ -6,7 +6,7 @@ from flask_login import LoginManager, login_user, login_required, logout_user, c
 
 from Timary.data import db_session
 from Timary.data.models import User
-from Timary.forms import RegisterForm, LoginForm
+from Timary.forms import RegisterForm, LoginForm, ChangeForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'very_secret_key_jwkjldjwkdjlkwdkwjdldwhifwifhwiuhiuefhwiufhiuehf0f9wwefw'
@@ -32,20 +32,21 @@ def reqister():
     if current_user.is_authenticated:
         return redirect('/')
     form = RegisterForm()
+    login_form = LoginForm()
     if form.validate_on_submit():
         if len(form.password.data) < 6:
             return render_template('register_and_login.html', title='Твоя профессия',
-                                   form=form,
+                                   form=form, form1=login_form,
                                    message="Пароль слишком короткий")
         if form.password.data.isdigit() or form.password.data.isalpha():
             return render_template('register_and_login.html', title='Твоя профессия',
-                                   form=form,
+                                   form=form, form1=login_form,
                                    message="Пароль должен содержать буквы и цифры")
         db = db_session.create_session()
         if db.query(User).filter(User.email == form.email.data).first() or \
                 db.query(User).filter(User.login == form.login.data).first():
             return render_template('register_and_login.html', title='Твоя профессия',
-                                   form=form,
+                                   form=form, form1=login_form,
                                    message="Такой пользователь уже существует")
         user = User(
             login=form.login.data,
@@ -57,19 +58,19 @@ def reqister():
         db.add(user)
         db.commit()
         login_user(user, remember=True)
-        return redirect('/')
-    login_form = LoginForm()
+        return redirect('/user_info')
+
     if login_form.validate_on_submit():
         db = db_session.create_session()
         user = db.query(User).filter(User.login == login_form.login.data).first()
         if not user:
-            return render_template('login.html', form1=login_form, message="Такого пользователя не существует",
+            return render_template('register_and_login.html', form=form, form1=login_form, message="Такого пользователя не существует",
                                    title='Твоя профессия')
         if user.check_password(login_form.password.data):
             login_user(user, remember=True)
-            return redirect('/')
+            return redirect('/user_info')
         else:
-            return render_template('login.html', form1=login_form, message="Неправильный пароль", title='Твоя профессия')
+            return render_template('register_and_login.html', form=form, form1=login_form, message="Неправильный пароль", title='Твоя профессия')
     return render_template('register_and_login.html', title='Твоя профессия', form=form, form1=login_form)
 
 
@@ -78,6 +79,36 @@ def reqister():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@app.route('/user_info')
+@login_required
+def user_info():
+    return render_template('user_info.html')
+
+
+@app.route('/change', methods=['GET', 'POST'])
+@login_required
+def change():
+    all_data = {
+        'login': current_user.login,
+        'name': current_user.name
+    }
+    change_form = ChangeForm(data=all_data)
+    if change_form.validate_on_submit():
+        db = db_session.create_session()
+        password = change_form.password.data
+        user_now = db.query(User).filter(User.id == current_user.id).first()
+        if user_now.check_password(password):
+            user_now.login = change_form.login.data
+            user_now.name = change_form.name.data
+            db.commit()
+            return redirect('/user_info')
+        else:
+            return render_template('change.html', form=change_form, message="Неправильный пароль",
+                                   title='Твоя профессия')
+    return render_template('change.html', form=change_form,
+                                   title='Твоя профессия')
 
 '''
 @app.errorhandler(404)
