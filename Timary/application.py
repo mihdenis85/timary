@@ -1,8 +1,9 @@
 import os
 from datetime import timedelta
 
-from flask import Flask, render_template, redirect, url_for, make_response, jsonify, session
+from flask import Flask, render_template, redirect, url_for, make_response, jsonify, session, request
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from werkzeug.utils import secure_filename
 
 from Timary.data import db_session
 from Timary.data.models import User, Timetable, Homework
@@ -14,7 +15,6 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=365)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -117,8 +117,15 @@ def change():
 
 
 @app.route('/homework')
+@login_required
 def homework():
-    return render_template('homework.html')
+    db = db_session.create_session()
+    tasks = db.query(Homework).filter(Homework.id == current_user.id).all()
+    print(len(tasks))
+    if tasks:
+        return render_template('homework.html', tasks=tasks, len_task=len(tasks))
+    else:
+        return render_template('homework.html', tasks=tasks, len_task=0)
 
 
 @app.route('/add_timetable', methods=['GET', 'POST'])
@@ -149,14 +156,28 @@ def add_homework():
         homework = Homework()
         homework.task = homework_form.task.data
         homework.lesson = homework_form.lesson.data
-        homework.end = homework_form.end.data
+        homework.day_of_week = homework_form.day_of_week.data
+        homework.num_of_week = homework_form.num_of_week.data
         homework.ready = homework_form.ready.data
         homework.file = homework_form.file.data
         current_user.homework.append(homework)
         db.merge(current_user)
         db.commit()
-        return redirect('/')
+        return redirect('/upload_file/<homework_form.file.data>')
     return render_template('add_homework.html', form=homework_form)
+
+
+@app.route('/upload_file/<file>', methods=['GET', 'POST'])
+@login_required
+def upload_file(file):
+    if request.method == 'POST':
+        file = request.files['file']
+        if file:
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return redirect(url_for('uploaded_file',
+                                    filename=filename))
+    return redirect('/homework')
 
 
 '''

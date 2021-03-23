@@ -61,3 +61,15 @@ body.theme-dark {
 .up-block {
     background-color: #FCE8B6;
 }
+TABLE {
+        width: 50%;
+        height: 50%;
+        border-collapse: collapse;
+        border: 2px solid white;
+        bordercolor: #000000;
+       }
+TD, TH {
+    padding: 25px;
+    border: 1px solid;
+    text-align: center;
+    }

@@ -11,7 +11,8 @@ class Homework(SqlAlchemyBase, SerializerMixin):
     homework_id = Column(Integer, primary_key=True, autoincrement=True)
     task = Column(String)
     lesson = Column(String)
-    end = Column(Date)
+    day_of_week = Column(String)
+    num_of_week = Column(Integer)
     ready = Column(String)
     file = Column(String)
 

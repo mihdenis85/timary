@@ -41,12 +41,18 @@
             {% endfor %}
             {{ form.lesson(class="in-put", size="40") }}</h1>
             <hr width="100%" size="2" color="#000000" />
-            <h1>{% for error in form.end.errors %}
+
+            <h1>{% for error in form.day_of_week.errors %}
                 <div class="alert alert-danger">{{ error }}</div>
             {% endfor %}
-            {{ form.end(class="in-put", size="40", type="date") }}</h1>
+            {{ form.day_of_week(class="in-put") }}</h1>
             <hr width="100%" size="2" color="#000000" />
 
+            <h1>{% for error in form.num_of_week.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+            {{ form.num_of_week(class="in-put") }}</h1>
+            <hr width="100%" size="2" color="#000000" />
 
             <br>
 

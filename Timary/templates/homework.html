@@ -28,6 +28,38 @@
              </div>
         </header>
 
-    <p class="text">Нажмите + чтобы добавить расписание</p> <!--"font-size: 500%; position:absolute; top:50%; left:30%; margin-top:-75px; margin-left:-150px"-->
+        {% if len_task == 0 %}
+    <p class="text">Нажмите + чтобы добавить задание</p>
+
+
+        {% else %}
+
+<table align="center" cellpadding="100%" bgcolor="#FCE8B6" bordercolor="#FFFFFF" frame="border"
+ rules="all">
+   <tr bgcolor="#FFFFFF">
+        <th width="5%">День недели</th>
+        <th>Урок</th>
+        <th>Задание</th>
+        <th>На какой неделе</th>
+        <th>Готово?</th>
+   </tr>
+    {% for i in range(len_task) %}
+    {% if tasks[i].day_of_week == '1' and tasks[i].num_of_week == 0 %}
+    <tr>
+        {% if i == 0 %}
+        <th> Пн</th>
+        {% else %}
+        <th> </th>
+        {% endif %}
+        <th> {{ tasks[i].lesson }}</th>
+        <th> {{ tasks[i].task }}</th>
+        <th> На этой неделе</th>
+        <th> {{ tasks[i].ready }}</th>
+   </tr>
+    {% endif %}
+    {% endfor %}
+
+
+{% endif %}
     </body>
 </html>
