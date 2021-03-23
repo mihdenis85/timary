@@ -40,26 +40,140 @@
         <th width="5%">День недели</th>
         <th>Урок</th>
         <th>Задание</th>
-        <th>На какой неделе</th>
+        <th>Неделя</th>
         <th>Готово?</th>
    </tr>
-    {% for i in range(len_task) %}
-    {% if tasks[i].day_of_week == '1' and tasks[i].num_of_week == 0 %}
+    {% if len_task1 == 0 %}
+    <tr>
+        <th> Пн</th>
+        <th> -</th>
+        <th> -</th>
+        <th> -</th>
+        <th> -</th>
+    </tr>
+    {% else %}
+    {% for i in range(len_task1) %}
     <tr>
         {% if i == 0 %}
-        <th> Пн</th>
-        {% else %}
-        <th> </th>
+        <th rowspan={{ len_task1 }}> Пн</th>
         {% endif %}
-        <th> {{ tasks[i].lesson }}</th>
-        <th> {{ tasks[i].task }}</th>
+        <th> {{ tasks1[i].lesson }}</th>
+        <th> {{ tasks1[i].task }}</th>
         <th> На этой неделе</th>
-        <th> {{ tasks[i].ready }}</th>
+        <th> {{ tasks1[i].ready }}</th>
    </tr>
-    {% endif %}
     {% endfor %}
+    {% endif %}
 
+    {% if len_task2 == 0 %}
+    <tr>
+        <th> Вт</th>
+        <th> -</th>
+        <th> -</th>
+        <th> -</th>
+        <th> -</th>
+    </tr>
+    {% else %}
+    {% for i in range(len_task2) %}
+    <tr>
+        {% if i == 0 %}
+        <th rowspan={{ len_task2 }}> Вт</th>
+        {% endif %}
+        <th> {{ tasks2[i].lesson }}</th>
+        <th> {{ tasks2[i].task }}</th>
+        <th> На этой неделе</th>
+        <th> {{ tasks2[i].ready }}</th>
+   </tr>
+    {% endfor %}
+    {% endif %}
 
+    {% if len_task3 == 0 %}
+    <tr>
+        <th> Ср</th>
+        <th> -</th>
+        <th> -</th>
+        <th> -</th>
+        <th> -</th>
+    </tr>
+    {% else %}
+    {% for i in range(len_task3) %}
+    <tr>
+        {% if i == 0 %}
+        <th rowspan={{ len_task3 }}> Ср</th>
+        {% endif %}
+        <th> {{ tasks3[i].lesson }}</th>
+        <th> {{ tasks3[i].task }}</th>
+        <th> На этой неделе</th>
+        <th> {{ tasks3[i].ready }}</th>
+   </tr>
+    {% endfor %}
+    {% endif %}
+
+    {% if len_task4 == 0 %}
+    <tr>
+        <th> Чт</th>
+        <th> -</th>
+        <th> -</th>
+        <th> -</th>
+        <th> -</th>
+    </tr>
+    {% else %}
+    {% for i in range(len_task4) %}
+    <tr>
+        {% if i == 0 %}
+        <th rowspan={{ len_task4 }}> Чт</th>
+        {% endif %}
+        <th> {{ tasks4[i].lesson }}</th>
+        <th> {{ tasks4[i].task }}</th>
+        <th> На этой неделе</th>
+        <th> {{ tasks4[i].ready }}</th>
+   </tr>
+    {% endfor %}
+    {% endif %}
+
+    {% if len_task5 == 0 %}
+    <tr>
+        <th> Пт</th>
+        <th> -</th>
+        <th> -</th>
+        <th> -</th>
+        <th> -</th>
+    </tr>
+    {% else %}
+    {% for i in range(len_task5) %}
+    <tr>
+        {% if i == 0 %}
+        <th rowspan={{ len_task5 }}> Пт</th>
+        {% endif %}
+        <th> {{ tasks5[i].lesson }}</th>
+        <th> {{ tasks5[i].task }}</th>
+        <th> На этой неделе</th>
+        <th> {{ tasks5[i].ready }}</th>
+   </tr>
+    {% endfor %}
+    {% endif %}
+
+    {% if len_task6 == 0 %}
+    <tr>
+        <th> Сб</th>
+        <th> -</th>
+        <th> -</th>
+        <th> -</th>
+        <th> -</th>
+    </tr>
+    {% else %}
+    {% for i in range(len_task6) %}
+    <tr>
+        {% if i == 0 %}
+        <th rowspan={{ len_task6 }}> Сб</th>
+        {% endif %}
+        <th> {{ tasks6[i].lesson }}</th>
+        <th> {{ tasks6[i].task }}</th>
+        <th> На этой неделе</th>
+        <th> {{ tasks6[i].ready }}</th>
+   </tr>
+    {% endfor %}
+    {% endif %}
 {% endif %}
     </body>
 </html>

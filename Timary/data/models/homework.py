@@ -12,7 +12,7 @@ class Homework(SqlAlchemyBase, SerializerMixin):
     task = Column(String)
     lesson = Column(String)
     day_of_week = Column(String)
-    num_of_week = Column(Integer)
+    num_of_week = Column(String)
     ready = Column(String)
     file = Column(String)
 

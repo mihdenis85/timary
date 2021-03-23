@@ -121,9 +121,30 @@ def change():
 def homework():
     db = db_session.create_session()
     tasks = db.query(Homework).filter(Homework.id == current_user.id).all()
-    print(len(tasks))
+    tasks1 = []
+    tasks2 = []
+    tasks3 = []
+    tasks4 = []
+    tasks5 = []
+    tasks6 = []
+    for task in tasks:
+        if task.day_of_week == '1' and task.num_of_week == '0':
+            tasks1.append(task)
+        elif task.day_of_week == '2' and task.num_of_week == '0':
+            tasks2.append(task)
+        elif task.day_of_week == '3' and task.num_of_week == '0':
+            tasks3.append(task)
+        elif task.day_of_week == '4' and task.num_of_week == '0':
+            tasks4.append(task)
+        elif task.day_of_week == '5' and task.num_of_week == '0':
+            tasks5.append(task)
+        elif task.day_of_week == '6' and task.num_of_week == '0':
+            tasks6.append(task)
     if tasks:
-        return render_template('homework.html', tasks=tasks, len_task=len(tasks))
+        return render_template('homework.html', tasks=tasks, len_task=len(tasks), tasks1=tasks1, tasks2=tasks2,
+                               tasks3=tasks3, tasks4=tasks4, tasks5=tasks5, tasks6=tasks6,
+                               len_task1=len(tasks1), len_task2=len(tasks2), len_task3=len(tasks3),
+                               len_task4=len(tasks4), len_task5=len(tasks5), len_task6=len(tasks6))
     else:
         return render_template('homework.html', tasks=tasks, len_task=0)
 
@@ -163,21 +184,11 @@ def add_homework():
         current_user.homework.append(homework)
         db.merge(current_user)
         db.commit()
-        return redirect('/upload_file/<homework_form.file.data>')
+        return redirect('/homework')
     return render_template('add_homework.html', form=homework_form)
 
 
-@app.route('/upload_file/<file>', methods=['GET', 'POST'])
-@login_required
-def upload_file(file):
-    if request.method == 'POST':
-        file = request.files['file']
-        if file:
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file',
-                                    filename=filename))
-    return redirect('/homework')
+
 
 
 '''
