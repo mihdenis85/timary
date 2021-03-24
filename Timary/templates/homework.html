@@ -36,7 +36,10 @@
 
 <table align="center" cellpadding="100%" bgcolor="#FCE8B6" bordercolor="#FFFFFF" frame="border"
  rules="all">
-   <tr bgcolor="#FFFFFF">
+    {% if num_of_week != '-2' %}
+    <a href="/homework/{{ previous_num }}"><img src="../static/img/arrow_previous.jpg" alt="" style="width: 100px; height: 100px; float:left"></img></a>
+   {% endif %}
+    <tr bgcolor="#FFFFFF">
         <th width="5%">День недели</th>
         <th>Урок</th>
         <th>Задание</th>
@@ -48,7 +51,7 @@
         <th> Пн</th>
         <th> -</th>
         <th> -</th>
-        <th> -</th>
+        <th> {{ message_of_week }}</th>
         <th> -</th>
     </tr>
     {% else %}
@@ -59,7 +62,7 @@
         {% endif %}
         <th> {{ tasks1[i].lesson }}</th>
         <th> {{ tasks1[i].task }}</th>
-        <th> На этой неделе</th>
+        <th> {{ message_of_week }}</th>
         <th> {{ tasks1[i].ready }}</th>
    </tr>
     {% endfor %}
@@ -70,7 +73,7 @@
         <th> Вт</th>
         <th> -</th>
         <th> -</th>
-        <th> -</th>
+        <th> {{ message_of_week }}</th>
         <th> -</th>
     </tr>
     {% else %}
@@ -81,7 +84,7 @@
         {% endif %}
         <th> {{ tasks2[i].lesson }}</th>
         <th> {{ tasks2[i].task }}</th>
-        <th> На этой неделе</th>
+        <th> {{ message_of_week }}</th>
         <th> {{ tasks2[i].ready }}</th>
    </tr>
     {% endfor %}
@@ -92,7 +95,7 @@
         <th> Ср</th>
         <th> -</th>
         <th> -</th>
-        <th> -</th>
+        <th> {{ message_of_week }}</th>
         <th> -</th>
     </tr>
     {% else %}
@@ -103,7 +106,7 @@
         {% endif %}
         <th> {{ tasks3[i].lesson }}</th>
         <th> {{ tasks3[i].task }}</th>
-        <th> На этой неделе</th>
+        <th> {{ message_of_week }}</th>
         <th> {{ tasks3[i].ready }}</th>
    </tr>
     {% endfor %}
@@ -114,7 +117,7 @@
         <th> Чт</th>
         <th> -</th>
         <th> -</th>
-        <th> -</th>
+        <th> {{ message_of_week }}</th>
         <th> -</th>
     </tr>
     {% else %}
@@ -125,7 +128,7 @@
         {% endif %}
         <th> {{ tasks4[i].lesson }}</th>
         <th> {{ tasks4[i].task }}</th>
-        <th> На этой неделе</th>
+        <th> {{ message_of_week }}</th>
         <th> {{ tasks4[i].ready }}</th>
    </tr>
     {% endfor %}
@@ -136,7 +139,7 @@
         <th> Пт</th>
         <th> -</th>
         <th> -</th>
-        <th> -</th>
+        <th> {{ message_of_week }}</th>
         <th> -</th>
     </tr>
     {% else %}
@@ -147,7 +150,7 @@
         {% endif %}
         <th> {{ tasks5[i].lesson }}</th>
         <th> {{ tasks5[i].task }}</th>
-        <th> На этой неделе</th>
+        <th> {{ message_of_week }}</th>
         <th> {{ tasks5[i].ready }}</th>
    </tr>
     {% endfor %}
@@ -158,7 +161,7 @@
         <th> Сб</th>
         <th> -</th>
         <th> -</th>
-        <th> -</th>
+        <th> {{ message_of_week }}</th>
         <th> -</th>
     </tr>
     {% else %}
@@ -169,11 +172,14 @@
         {% endif %}
         <th> {{ tasks6[i].lesson }}</th>
         <th> {{ tasks6[i].task }}</th>
-        <th> На этой неделе</th>
+        <th> {{ message_of_week }}</th>
         <th> {{ tasks6[i].ready }}</th>
    </tr>
     {% endfor %}
     {% endif %}
 {% endif %}
+    {% if num_of_week != '2' %}
+    <a href="/homework/{{ next_num }}"><img src="../static/img/arrow_next.jpg" alt="" style="width: 100px; height: 100px; float:right"></img></a>
+    {% endif %}
     </body>
 </html>
