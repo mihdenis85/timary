@@ -14,7 +14,9 @@
  rules="all">
     {% if num_of_week != '-2' %}
     <a href="/timetable/{{ previous_num }}"><img src="../static/img/arrow_previous.jpg" alt="" style="width: 100px; height: 100px; float:left"></img></a>
-   {% endif %}
+   {% else %}
+    <img src="../static/img/rectangle_next.jpg" alt="" style="width: 100px; height: 100px; float:left"></img>
+    {% endif %}
     <tr bgcolor="#FFFFFF">
         <th width="5%">День недели</th>
         <th>Урок</th>
@@ -142,6 +144,8 @@
     {% endif %}
     {% if num_of_week != '2' %}
     <a href="/timetable/{{ next_num }}"><img src="../static/img/arrow_next.jpg" alt="" style="width: 100px; height: 100px; float:right"></img></a>
+    {% else %}
+    <img src="../static/img/rectangle_next.jpg" alt="" style="width: 100px; height: 100px; float:right"></img>
     {% endif %}
 
 {% endif %}
