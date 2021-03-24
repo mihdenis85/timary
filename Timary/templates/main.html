@@ -5,6 +5,145 @@
 {% endblock %}
 
 {% block content %}
-<p class="text">Нажмите + чтобы добавить расписание</p> <!--"font-size: 500%; position:absolute; top:50%; left:30%; margin-top:-75px; margin-left:-150px"-->
+{% if len_task == 0 %}
+    <p class="text">Нажмите + чтобы добавить расписание</p>
+
+{% else %}
+
+<table align="center" cellpadding="100%" bgcolor="#FCE8B6" bordercolor="#FFFFFF" frame="border"
+ rules="all">
+    {% if num_of_week != '-2' %}
+    <a href="/timetable/{{ previous_num }}"><img src="../static/img/arrow_previous.jpg" alt="" style="width: 100px; height: 100px; float:left"></img></a>
+   {% endif %}
+    <tr bgcolor="#FFFFFF">
+        <th width="5%">День недели</th>
+        <th>Урок</th>
+        <th>Кабинет</th>
+        <th>Неделя</th>
+   </tr>
+    {% if len_lesson1 == 0 %}
+    <tr>
+        <th> Пн</th>
+        <th> -</th>
+        <th> -</th>
+        <th> {{ message_of_week }}</th>
+    </tr>
+    {% else %}
+    {% for i in range(len_lesson1) %}
+    <tr>
+        {% if i == 0 %}
+        <th rowspan={{ len_lesson1 }}> Пн</th>
+        {% endif %}
+        <th> {{ lessons1[i].lesson }}</th>
+        <th> {{ lessons1[i].room }}</th>
+        <th> {{ message_of_week }}</th>
+   </tr>
+    {% endfor %}
+    {% endif %}
+
+    {% if len_lesson2 == 0 %}
+    <tr>
+        <th> Вт</th>
+        <th> -</th>
+        <th> -</th>
+        <th> {{ message_of_week }}</th>
+    </tr>
+    {% else %}
+    {% for i in range(len_lesson2) %}
+    <tr>
+        {% if i == 0 %}
+        <th rowspan={{ len_lesson2 }}> Вт</th>
+        {% endif %}
+        <th> {{ lessons2[i].lesson }}</th>
+        <th> {{ lessons2[i].room }}</th>
+        <th> {{ message_of_week }}</th>
+   </tr>
+    {% endfor %}
+    {% endif %}
+
+    {% if len_lesson3 == 0 %}
+    <tr>
+        <th> Ср</th>
+        <th> -</th>
+        <th> -</th>
+        <th> {{ message_of_week }}</th>
+    </tr>
+    {% else %}
+    {% for i in range(len_lesson3) %}
+    <tr>
+        {% if i == 0 %}
+        <th rowspan={{ len_lesson3 }}> Ср</th>
+        {% endif %}
+        <th> {{ lessons3[i].lesson }}</th>
+        <th> {{ lessons3[i].room }}</th>
+        <th> {{ message_of_week }}</th>
+   </tr>
+    {% endfor %}
+    {% endif %}
+
+    {% if len_lesson4 == 0 %}
+    <tr>
+        <th> Чт</th>
+        <th> -</th>
+        <th> -</th>
+        <th> {{ message_of_week }}</th>
+    </tr>
+    {% else %}
+    {% for i in range(len_lesson4) %}
+    <tr>
+        {% if i == 0 %}
+        <th rowspan={{ len_lesson4 }}> Чт</th>
+        {% endif %}
+        <th> {{ lessons4[i].lesson }}</th>
+        <th> {{ lessons4[i].room }}</th>
+        <th> {{ message_of_week }}</th>
+   </tr>
+    {% endfor %}
+    {% endif %}
+
+    {% if len_lesson5 == 0 %}
+    <tr>
+        <th> Пт</th>
+        <th> -</th>
+        <th> -</th>
+        <th> {{ message_of_week }}</th>
+    </tr>
+    {% else %}
+    {% for i in range(len_lesson5) %}
+    <tr>
+        {% if i == 0 %}
+        <th rowspan={{ len_lesson5 }}> Пт</th>
+        {% endif %}
+        <th> {{ lessons5[i].lesson }}</th>
+        <th> {{ lessons5[i].room }}</th>
+        <th> {{ message_of_week }}</th>
+   </tr>
+    {% endfor %}
+    {% endif %}
+
+    {% if len_lesson6 == 0 %}
+    <tr>
+        <th> Сб</th>
+        <th> -</th>
+        <th> -</th>
+        <th> {{ message_of_week }}</th>
+    </tr>
+    {% else %}
+    {% for i in range(len_lesson6) %}
+    <tr>
+        {% if i == 0 %}
+        <th rowspan={{ len_lesson6 }}> Сб</th>
+        {% endif %}
+        <th> {{ lessons6[i].lesson }}</th>
+        <th> {{ lessons6[i].room }}</th>
+        <th> {{ message_of_week }}</th>
+   </tr>
+    {% endfor %}
+    {% endif %}
+    {% if num_of_week != '2' %}
+    <a href="/timetable/{{ next_num }}"><img src="../static/img/arrow_next.jpg" alt="" style="width: 100px; height: 100px; float:right"></img></a>
+    {% endif %}
+
+{% endif %}
 
 {% endblock %}

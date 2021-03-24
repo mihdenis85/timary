@@ -24,7 +24,109 @@ def load_user(user_id):
 
 @app.route('/')
 def index():
-    return render_template('main.html', title='Timary Project')
+    return redirect('/timetable/0')
+
+
+@app.route('/timetable/<num_of_week>')
+def index_start(num_of_week):
+    if current_user.is_anonymous:
+        return render_template('main.html', len_task=0)
+    if num_of_week != '0' and num_of_week != '1' and num_of_week != '2' and num_of_week != '-1' and num_of_week != '-2':
+        return redirect('/timetable/0')
+    db = db_session.create_session()
+    lessons = db.query(Timetable).filter(Timetable.id == current_user.id).all()
+    lessons1 = []
+    lessons2 = []
+    lessons3 = []
+    lessons4 = []
+    lessons5 = []
+    lessons6 = []
+    for lesson in lessons:
+        if lesson.day_of_week == '1' and lesson.num_of_week == num_of_week:
+            lessons1.append(lesson)
+        elif lesson.day_of_week == '2' and lesson.num_of_week == num_of_week:
+            lessons2.append(lesson)
+        elif lesson.day_of_week == '3' and lesson.num_of_week == num_of_week:
+            lessons3.append(lesson)
+        elif lesson.day_of_week == '4' and lesson.num_of_week == num_of_week:
+            lessons4.append(lesson)
+        elif lesson.day_of_week == '5' and lesson.num_of_week == num_of_week:
+            lessons5.append(lesson)
+        elif lesson.day_of_week == '6' and lesson.num_of_week == num_of_week:
+            lessons6.append(lesson)
+    next_num = str(int(num_of_week) + 1)
+    previous_num = str(int(num_of_week) - 1)
+    if num_of_week == '0':
+        message_of_week = 'На этой неделе'
+    elif num_of_week == '-1':
+        message_of_week = 'На предыдушей неделе'
+    elif num_of_week == '-2':
+        message_of_week = 'На позапрошлой неделе'
+    elif num_of_week == '1':
+        message_of_week = 'На следующей неделе'
+    elif num_of_week == '2':
+        message_of_week = 'На неделе после следующей'
+    if lessons:
+        return render_template('main.html', lessons=lessons, len_lesson=len(lessons), lessons1=lessons1, lessons2=lessons2,
+                               lessons3=lessons3, lessons4=lessons4, lessons5=lessons5, lessons6=lessons6,
+                               len_lesson1=len(lessons1), len_lesson2=len(lessons2), len_lesson3=len(lessons3),
+                               len_lesson4=len(lessons4), len_lesson5=len(lessons5), len_lesson6=len(lessons6),
+                               num_of_week=num_of_week, next_num=next_num,
+                               previous_num=previous_num, message_of_week=message_of_week)
+    else:
+        return render_template('main.html', lessons=lessons, len_task=0, num_of_week=num_of_week,
+                               next_num=next_num, previous_num=previous_num, message_of_week=message_of_week)
+
+
+@app.route('/homework/<num_of_week>')
+def homework(num_of_week):
+    if current_user.is_anonymous:
+        return render_template('homework.html', len_task=0)
+    if num_of_week != '0' and num_of_week != '1' and num_of_week != '2' and num_of_week != '-1' and num_of_week != '-2':
+        return redirect('/homework/0')
+    db = db_session.create_session()
+    tasks = db.query(Homework).filter(Homework.id == current_user.id).all()
+    tasks1 = []
+    tasks2 = []
+    tasks3 = []
+    tasks4 = []
+    tasks5 = []
+    tasks6 = []
+    for task in tasks:
+        if task.day_of_week == '1' and task.num_of_week == num_of_week:
+            tasks1.append(task)
+        elif task.day_of_week == '2' and task.num_of_week == num_of_week:
+            tasks2.append(task)
+        elif task.day_of_week == '3' and task.num_of_week == num_of_week:
+            tasks3.append(task)
+        elif task.day_of_week == '4' and task.num_of_week == num_of_week:
+            tasks4.append(task)
+        elif task.day_of_week == '5' and task.num_of_week == num_of_week:
+            tasks5.append(task)
+        elif task.day_of_week == '6' and task.num_of_week == num_of_week:
+            tasks6.append(task)
+    next_num = str(int(num_of_week) + 1)
+    previous_num = str(int(num_of_week) - 1)
+    if num_of_week == '0':
+        message_of_week = 'На этой неделе'
+    elif num_of_week == '-1':
+        message_of_week = 'На предыдушей неделе'
+    elif num_of_week == '-2':
+        message_of_week = 'На позапрошлой неделе'
+    elif num_of_week == '1':
+        message_of_week = 'На следующей неделе'
+    elif num_of_week == '2':
+        message_of_week = 'На неделе после следующей'
+    if tasks:
+        return render_template('homework.html', tasks=tasks, len_task=len(tasks), tasks1=tasks1, tasks2=tasks2,
+                               tasks3=tasks3, tasks4=tasks4, tasks5=tasks5, tasks6=tasks6,
+                               len_task1=len(tasks1), len_task2=len(tasks2), len_task3=len(tasks3),
+                               len_task4=len(tasks4), len_task5=len(tasks5), len_task6=len(tasks6),
+                               num_of_week=num_of_week, next_num=next_num,
+                               previous_num=previous_num, message_of_week=message_of_week)
+    else:
+        return render_template('homework.html', tasks=tasks, len_task=0, num_of_week=num_of_week,
+                               next_num=next_num, previous_num=previous_num, message_of_week=message_of_week)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -116,56 +218,6 @@ def change():
                                    title='Твоя профессия')
 
 
-@app.route('/homework/<num_of_week>')
-@login_required
-def homework(num_of_week):
-    if num_of_week != '0' and num_of_week != '1' and num_of_week != '2' and num_of_week != '-1' and num_of_week != '-2':
-        return redirect('/homework/0')
-    db = db_session.create_session()
-    tasks = db.query(Homework).filter(Homework.id == current_user.id).all()
-    tasks1 = []
-    tasks2 = []
-    tasks3 = []
-    tasks4 = []
-    tasks5 = []
-    tasks6 = []
-    for task in tasks:
-        if task.day_of_week == '1' and task.num_of_week == num_of_week:
-            tasks1.append(task)
-        elif task.day_of_week == '2' and task.num_of_week == num_of_week:
-            tasks2.append(task)
-        elif task.day_of_week == '3' and task.num_of_week == num_of_week:
-            tasks3.append(task)
-        elif task.day_of_week == '4' and task.num_of_week == num_of_week:
-            tasks4.append(task)
-        elif task.day_of_week == '5' and task.num_of_week == num_of_week:
-            tasks5.append(task)
-        elif task.day_of_week == '6' and task.num_of_week == num_of_week:
-            tasks6.append(task)
-    next_num = str(int(num_of_week) + 1)
-    previous_num = str(int(num_of_week) - 1)
-    if num_of_week == '0':
-        message_of_week = 'На этой неделе'
-    elif num_of_week == '-1':
-        message_of_week = 'На предыдушей неделе'
-    elif num_of_week == '-2':
-        message_of_week = 'На позапрошлой неделе'
-    elif num_of_week == '1':
-        message_of_week = 'На следующей неделе'
-    elif num_of_week == '2':
-        message_of_week = 'На неделе после следующей'
-    if tasks:
-        return render_template('homework.html', tasks=tasks, len_task=len(tasks), tasks1=tasks1, tasks2=tasks2,
-                               tasks3=tasks3, tasks4=tasks4, tasks5=tasks5, tasks6=tasks6,
-                               len_task1=len(tasks1), len_task2=len(tasks2), len_task3=len(tasks3),
-                               len_task4=len(tasks4), len_task5=len(tasks5), len_task6=len(tasks6),
-                               num_of_week=num_of_week, next_num=next_num,
-                               previous_num=previous_num, message_of_week=message_of_week)
-    else:
-        return render_template('homework.html', tasks=tasks, len_task=0, num_of_week=num_of_week,
-                               next_num=next_num, previous_num=previous_num, message_of_week=message_of_week)
-
-
 @app.route('/add_timetable', methods=['GET', 'POST'])
 @login_required
 def add_timetable():
@@ -175,9 +227,8 @@ def add_timetable():
         timetable = Timetable()
         timetable.lesson = timetable_form.lesson.data
         timetable.room = timetable_form.room.data
-        timetable.begin = timetable_form.begin.data
-        timetable.end = timetable_form.end.data
-        timetable.day = timetable_form.day.data
+        timetable.day_of_week = timetable_form.day_of_week.data
+        timetable.num_of_week = timetable_form.num_of_week.data
         current_user.timetable.append(timetable)
         db.merge(current_user)
         db.commit()

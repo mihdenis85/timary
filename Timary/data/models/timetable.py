@@ -10,8 +10,7 @@ class Timetable(SqlAlchemyBase, SerializerMixin):
     id = Column(Integer, ForeignKey('users.id'))
     lesson = Column(String)
     room = Column(String)
-    begin = Column(Time)
-    end = Column(Time)
-    day = Column(Date)
+    day_of_week = Column(String)
+    num_of_week = Column(String)
 
     user = orm.relation('User')
