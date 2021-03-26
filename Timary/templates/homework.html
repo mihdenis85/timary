@@ -13,7 +13,7 @@
         <header class="up-block">
              <div class="fixed-container">
                 <nav class="up-text">
-                    <a href="/add_homework" style="padding: 0 3% 0 0">+</a>
+                    <a href="/add_homework/0" style="padding: 0 3% 0 0">+</a>
                     <img src="../static/img/timetable.png" style="width: 5%; height: 5%; margin: auto 0";></img>
                     <a href="/timetable/0" style="padding: 0 3% 0 0">Раcписание</a>
                     <img src="../static/img/homework.png" style="width: 5%; height: 5%; margin: auto 0"></img>
@@ -47,6 +47,7 @@
         <th>Задание</th>
         <th>Неделя</th>
         <th>Готово?</th>
+        <th>Изменить/удалить</th>
    </tr>
     {% if len_task1 == 0 %}
     <tr>
@@ -66,6 +67,7 @@
         <th> {{ tasks1[i].task }}</th>
         <th> {{ message_of_week }}</th>
         <th> {{ tasks1[i].ready }}</th>
+        <th><a href="/add_homework/{{ tasks1[i].homework_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}
     {% endif %}
@@ -88,6 +90,7 @@
         <th> {{ tasks2[i].task }}</th>
         <th> {{ message_of_week }}</th>
         <th> {{ tasks2[i].ready }}</th>
+        <th><a href="/add_homework/{{ tasks2[i].homework_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}
     {% endif %}
@@ -110,6 +113,7 @@
         <th> {{ tasks3[i].task }}</th>
         <th> {{ message_of_week }}</th>
         <th> {{ tasks3[i].ready }}</th>
+        <th><a href="/add_homework/{{ tasks3[i].homework_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}
     {% endif %}
@@ -132,6 +136,7 @@
         <th> {{ tasks4[i].task }}</th>
         <th> {{ message_of_week }}</th>
         <th> {{ tasks4[i].ready }}</th>
+        <th><a href="/add_homework/{{ tasks4[i].homework_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}
     {% endif %}
@@ -154,6 +159,7 @@
         <th> {{ tasks5[i].task }}</th>
         <th> {{ message_of_week }}</th>
         <th> {{ tasks5[i].ready }}</th>
+        <th><a href="/add_homework/{{ tasks5[i].homework_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}
     {% endif %}
@@ -176,6 +182,7 @@
         <th> {{ tasks6[i].task }}</th>
         <th> {{ message_of_week }}</th>
         <th> {{ tasks6[i].ready }}</th>
+        <th><a href="/add_homework/{{ tasks6[i].homework_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}
     {% endif %}

@@ -268,27 +268,58 @@ def delete_timetable(id):
     return redirect('/')
 
 
-@app.route('/add_homework', methods=['GET', 'POST'])
+@app.route('/add_homework/<int:id>', methods=['GET', 'POST'])
 @login_required
-def add_homework():
-    homework_form = HomeworkForm()
-    if homework_form.validate_on_submit():
+def add_homework(id):
+    if id != 0:
         db = db_session.create_session()
-        homework = Homework()
-        homework.task = homework_form.task.data
-        homework.lesson = homework_form.lesson.data
-        homework.day_of_week = homework_form.day_of_week.data
-        homework.num_of_week = homework_form.num_of_week.data
-        homework.ready = homework_form.ready.data
-        homework.file = homework_form.file.data
-        current_user.homework.append(homework)
-        db.merge(current_user)
+        task = db.query(Homework).filter(Homework.homework_id == int(id)).first()
+        if not task or task.user != current_user:
+            return redirect('/homework/0')
+        all_data = {
+            'task': task.task,
+            'lesson': task.lesson,
+            'day_of_week': task.day_of_week,
+            'num_of_week': task.num_of_week,
+            'ready': task.ready
+        }
+        homework_form = HomeworkForm(data=all_data)
+        if homework_form.validate_on_submit():
+            task.task = homework_form.task.data
+            task.lesson = homework_form.lesson.data
+            task.day_of_week = homework_form.day_of_week.data
+            task.num_of_week = homework_form.num_of_week.data
+            task.ready = homework_form.ready.data
+            db.commit()
+            return redirect('/homework/0')
+        return render_template('add_homework.html', form=homework_form, deletion=True, id=id)
+    else:
+        homework_form = HomeworkForm()
+        if homework_form.validate_on_submit():
+            db = db_session.create_session()
+            homework = Homework()
+            homework.task = homework_form.task.data
+            homework.lesson = homework_form.lesson.data
+            homework.day_of_week = homework_form.day_of_week.data
+            homework.num_of_week = homework_form.num_of_week.data
+            homework.ready = homework_form.ready.data
+            homework.file = homework_form.file.data
+            current_user.homework.append(homework)
+            db.merge(current_user)
+            db.commit()
+            return redirect('/homework/0')
+        return render_template('add_homework.html', form=homework_form, deletion=False)
+
+
+@app.route('/delete_homework/<int:id>')
+@login_required
+def delete_homework(id):
+    db = db_session.create_session()
+    task = db.query(Homework).filter(Homework.user == current_user, Homework.homework_id == id).first()
+    if task and task.user == current_user:
+        db.delete(task)
         db.commit()
-        return redirect('/homework/0')
-    return render_template('add_homework.html', form=homework_form)
-
-
-
+    return redirect('/homework/0')
 
 
 '''
