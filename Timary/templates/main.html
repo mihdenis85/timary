@@ -12,6 +12,7 @@
 
 <table align="center" cellpadding="100%" bgcolor="#FCE8B6" bordercolor="#FFFFFF" frame="border"
  rules="all">
+
     {% if num_of_week != '-2' %}
     <a href="/timetable/{{ previous_num }}"><img src="../static/img/arrow_previous.jpg" alt="" style="width: 100px; height: 100px; float:left"></img></a>
    {% else %}
@@ -22,6 +23,7 @@
         <th>Урок</th>
         <th>Кабинет</th>
         <th>Неделя</th>
+        <th>Изменить/удалить</th>
    </tr>
     {% if len_lesson1 == 0 %}
     <tr>
@@ -39,6 +41,7 @@
         <th> {{ lessons1[i].lesson }}</th>
         <th> {{ lessons1[i].room }}</th>
         <th> {{ message_of_week }}</th>
+        <th><a href="/add_timetable/{{ lessons1[i].lesson_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}
     {% endif %}
@@ -59,6 +62,7 @@
         <th> {{ lessons2[i].lesson }}</th>
         <th> {{ lessons2[i].room }}</th>
         <th> {{ message_of_week }}</th>
+        <th><a href="/add_timetable/{{ lessons2[i].lesson_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}
     {% endif %}
@@ -79,6 +83,7 @@
         <th> {{ lessons3[i].lesson }}</th>
         <th> {{ lessons3[i].room }}</th>
         <th> {{ message_of_week }}</th>
+        <th><a href="/add_timetable/{{ lessons3[i].lesson_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}
     {% endif %}
@@ -99,6 +104,7 @@
         <th> {{ lessons4[i].lesson }}</th>
         <th> {{ lessons4[i].room }}</th>
         <th> {{ message_of_week }}</th>
+        <th><a href="/add_timetable/{{ lessons4[i].lesson_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}
     {% endif %}
@@ -119,6 +125,7 @@
         <th> {{ lessons5[i].lesson }}</th>
         <th> {{ lessons5[i].room }}</th>
         <th> {{ message_of_week }}</th>
+        <th><a href="/add_timetable/{{ lessons5[i].lesson_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}
     {% endif %}
@@ -139,6 +146,7 @@
         <th> {{ lessons6[i].lesson }}</th>
         <th> {{ lessons6[i].room }}</th>
         <th> {{ message_of_week }}</th>
+        <th><a href="/add_timetable/{{ lessons6[i].lesson_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}
     {% endif %}

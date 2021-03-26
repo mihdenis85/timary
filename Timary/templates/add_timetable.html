@@ -14,7 +14,11 @@
                 <nav class="up-text">
                     <a href="/" style="font-size: 40px;">< Назад</a>
                    <img src="../static/img/timetable.png" style="width: 5%; height: 5%;"></img>
-                   <img src="../static/img/delete.png" style="width: 3.5%; height: 3.5%;"></img>
+                    {% if deletion %}
+                    <a href="/delete_timetable/{{ id }}">Удалить</a>
+                    {% else %}
+                    <img src="../static/img/delete.png" style="width: 3.5%; height: 3.5%;"></img>
+                    {% endif %}
                 </nav>
             </div>
         </header>

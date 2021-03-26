@@ -218,22 +218,54 @@ def change():
                                    title='Твоя профессия')
 
 
-@app.route('/add_timetable', methods=['GET', 'POST'])
+@app.route('/add_timetable/<int:id>', methods=['GET', 'POST'])
 @login_required
-def add_timetable():
-    timetable_form = TimetableForm()
-    if timetable_form.validate_on_submit():
+def add_timetable(id):
+    if id != 0:
         db = db_session.create_session()
-        timetable = Timetable()
-        timetable.lesson = timetable_form.lesson.data
-        timetable.room = timetable_form.room.data
-        timetable.day_of_week = timetable_form.day_of_week.data
-        timetable.num_of_week = timetable_form.num_of_week.data
-        current_user.timetable.append(timetable)
-        db.merge(current_user)
+        lesson = db.query(Timetable).filter(Timetable.lesson_id == int(id)).first()
+        if not lesson or lesson.user != current_user:
+            return redirect('/')
+        all_data = {
+            'lesson': lesson.lesson,
+            'room': lesson.room,
+            'day_of_week': lesson.day_of_week,
+            'num_of_week': lesson.num_of_week
+        }
+        timetable_form = TimetableForm(data=all_data)
+        if timetable_form.validate_on_submit():
+            lesson.lesson = timetable_form.lesson.data
+            lesson.room = timetable_form.room.data
+            lesson.day_of_week = timetable_form.day_of_week.data
+            lesson.num_of_week = timetable_form.num_of_week.data
+            db.commit()
+            return redirect('/')
+        return render_template('add_timetable.html', form=timetable_form, deletion=True, id=id)
+    else:
+        timetable_form = TimetableForm()
+        if timetable_form.validate_on_submit():
+            db = db_session.create_session()
+            timetable = Timetable()
+            timetable.lesson = timetable_form.lesson.data
+            timetable.room = timetable_form.room.data
+            timetable.day_of_week = timetable_form.day_of_week.data
+            timetable.num_of_week = timetable_form.num_of_week.data
+            current_user.timetable.append(timetable)
+            db.merge(current_user)
+            db.commit()
+            return redirect('/')
+        return render_template('add_timetable.html', form=timetable_form, deletion=False)
+
+
+@app.route('/delete_timetable/<int:id>')
+@login_required
+def delete_timetable(id):
+    db = db_session.create_session()
+    lesson = db.query(Timetable).filter(Timetable.user == current_user, Timetable.lesson_id == id).first()
+    if lesson and lesson.user == current_user:
+        db.delete(lesson)
         db.commit()
-        return redirect('/')
-    return render_template('add_timetable.html', form=timetable_form)
+    return redirect('/')
 
 
 @app.route('/add_homework', methods=['GET', 'POST'])

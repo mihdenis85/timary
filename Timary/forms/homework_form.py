@@ -13,4 +13,4 @@ class HomeworkForm(FlaskForm):
                                                               ('2', 'На неделе после следующей')], default='0')
     ready = StringField('Готовность', validators=[DataRequired()], render_kw={"placeholder": "Готовность"})
     file = FileField('Загрузить файлы')
-    submit = SubmitField('Добавить')
+    submit = SubmitField('Добавить/Изменить')
