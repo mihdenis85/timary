@@ -134,26 +134,24 @@ def reqister():
     if current_user.is_authenticated:
         return redirect('/')
     form = RegisterForm()
-    login_form = LoginForm()
-    print(form.password.data)
     if form.password.data and form.login.data and form.name.data and form.email.data:
         if form.validate_on_submit():
             if len(form.password.data) < 6:
-                return render_template('register_and_login.html', title='Твоя профессия',
-                                       form=form, form1=login_form,
-                                       message="Проверьте пароль")
+                return render_template('register.html', title='Твоя профессия',
+                                       form=form,
+                                       message="Пароль должен содержать не меньше 6 символов")
             if form.password.data.isdigit() or form.password.data.isalpha():
-                return render_template('register_and_login.html', title='Твоя профессия',
-                                       form=form, form1=login_form,
-                                       message="Проверьте пароль")
+                return render_template('register.html', title='Твоя профессия',
+                                       form=form,
+                                       message="Пароль должен состоять не только из букв или цифр")
             if not form.login.data or not form.name.data or not form.email.data or not form.theme.data:
-                return render_template('register_and_login.html', form=form, form1=login_form, login_form=login_form,
+                return render_template('register.html', form=form,
                                        message='Проверьте правильность заполнения полей')
             db = db_session.create_session()
             if db.query(User).filter(User.email == form.email.data).first() or \
                     db.query(User).filter(User.login == form.login.data).first():
-                return render_template('register_and_login.html', title='Твоя профессия',
-                                       form=form, form1=login_form,
+                return render_template('register.html', title='Твоя профессия',
+                                       form=form,
                                        message="Такой пользователь уже существует")
             user = User(
                 login=form.login.data,
@@ -166,19 +164,26 @@ def reqister():
             db.commit()
             login_user(user, remember=True)
             return redirect('/user_info')
+    return render_template('register.html', title='Твоя профессия', form=form)
 
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect('/')
+    login_form = LoginForm()
     if login_form.validate_on_submit():
         db = db_session.create_session()
         user = db.query(User).filter(User.login == login_form.login.data).first()
         if not user:
-            return render_template('register_and_login.html', form=form, form1=login_form, message1="Проверьте правильность заполнения полей",
+            return render_template('login.html', form1=login_form, message1="Такого пользователя не существует",
                                    title='Твоя профессия')
         if user.check_password(login_form.password.data):
             login_user(user, remember=True)
             return redirect('/user_info')
         else:
-            return render_template('register_and_login.html', form=form, form1=login_form, message1="Проверьте пароль", title='Твоя профессия')
-    return render_template('register_and_login.html', title='Твоя профессия', form=form, form1=login_form)
+            return render_template('login.html', form1=login_form, message1="Неправильный пароль", title='Твоя профессия')
+    return render_template('login.html', title='Твоя профессия', form1=login_form)
 
 
 @app.route('/logout')
