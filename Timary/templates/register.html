@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block content %}
-<div class="container mt-4" style="margin: 0 2%;" >
-<div class="left-col">
-<h1> Форма регистрации </h1>
+<div class="parent">
+    <div class="registration">
+<b> Зарегистрироваться </b>
     <form action="" method="post" class="form-w">
     {{ form.hidden_tag() }}
             {{ form.csrf_token }}
@@ -16,28 +16,28 @@
             {% endif %}
 
 
-            {{ form.login(class="form-control") }}<br><br>
+            {{ form.login(class="form-control") }}
             {% for error in form.login.errors %}
                 <p class="text-register" role="alert">
                     {{ error }}
                 </p>
             {% endfor %}
 
-            {{ form.name(class="form-control") }}<br><br>
+            {{ form.name(class="form-control") }}
             {% for error in form.name.errors %}
                 <p class="text-register" role="alert">
                     {{ error }}
                 </p>
             {% endfor %}
 
-            {{ form.password(class="form-control") }}<br><br>
+            {{ form.password(class="form-control") }}
             {% for error in form.password.errors %}
                 <p class="text-register" role="alert">
                     {{ error }}
                 </p>
             {% endfor %}
 
-            {{ form.email(class="form-control", type="email") }}<br><br>
+            {{ form.email(class="form-control", type="email") }}
             {% for error in form.email.errors %}
                 <p class="text-register" role="alert">
                     {{ error }}
@@ -45,15 +45,11 @@
             {% endfor %}
 
 
-            {{ form.theme(class="form-control", type="email") }}
-            {% for error in form.theme.errors %}
-                <p class="text-register" role="alert">
-                    {{ error }}
-                </p>
-            {% endfor %}
-
 
             {{ form.submit(type="submit", class="register-button") }}
     </form>
+    <text class = "link"> Уже зарегистрированы? <a href ="/login"> Войти </a> </text>
+    </div>
+</div>>
 
 {% endblock %}

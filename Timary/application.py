@@ -144,7 +144,7 @@ def reqister():
                 return render_template('register.html', title='Твоя профессия',
                                        form=form,
                                        message="Пароль должен состоять не только из букв или цифр")
-            if not form.login.data or not form.name.data or not form.email.data or not form.theme.data:
+            if not form.login.data or not form.name.data or not form.email.data:
                 return render_template('register.html', form=form,
                                        message='Проверьте правильность заполнения полей')
             db = db_session.create_session()
@@ -157,7 +157,7 @@ def reqister():
                 login=form.login.data,
                 name=form.name.data,
                 email=form.email.data,
-                theme=form.theme.data
+                theme='1'
             )
             user.set_password(form.password.data)
             db.add(user)

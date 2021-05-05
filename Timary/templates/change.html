@@ -5,8 +5,9 @@
 {% endblock %}
 
 {% block content %}
-<div class="left-col">
-    <h1>Форма изменения</h1>
+<div class="parent">
+    <div class="auth">
+    <b>Изменить данные аккаунта</b>
     <form class="card-body" method="POST">
         {% if message %}
         <div class="text">{{ message }}</div>
@@ -20,7 +21,6 @@
         <div class="form-group">
             {{ form.login(class="form-control") }}
         </div>
-                <br>
 
 
         {% for error in form.name.errors %}
@@ -29,7 +29,6 @@
         <div class="form-group">
             {{ form.name(class="form-control") }}
         </div>
-                <br>
 
         {% for error in form.password.errors %}
             <div class="alert alert-danger">{{ error }}</div>
@@ -37,7 +36,6 @@
         <div class="form-group">
             {{ form.password(class="form-control") }}
         </div>
-                <br>
 
 
         {{ form.submit() }}

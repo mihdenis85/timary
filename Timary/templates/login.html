@@ -5,11 +5,9 @@
 {% endblock %}
 
 {% block content %}
-<div class="container mt-4" style="margin: 0 2%;" >
-
-</div>
-    <div class="left-col">
-                <h1> Форма авторизации </h1>
+    <div class="parent">
+            <div class="auth">
+                <b> Авторизоваться </b>
                 <form class="card-body" method="POST">
                     {% if message1 %}
             <div class="text">{{ message1 }}</div>
@@ -23,7 +21,6 @@
             <div class="form-group">
                 {{ form1.login(class="form-control") }}
             </div>
-                    <br>
 
             {% for error in form1.password.errors %}
                 <div class="alert alert-danger">{{ error }}</div>
@@ -31,12 +28,11 @@
             <div class="form-group">
                 {{ form1.password(class="form-control") }}
             </div>
-                    <br>
 
 
             {{ form1.submit() }}
                  </form>
             </div>
-</div>
+    </div>
 
 {% endblock %}
