@@ -137,11 +137,11 @@ def reqister():
     if form.password.data and form.login.data and form.name.data and form.email.data:
         if form.validate_on_submit():
             if len(form.password.data) < 6:
-                return render_template('register.html', title='Твоя профессия',
+                return render_template('register.html',
                                        form=form,
                                        message="Пароль должен содержать не меньше 6 символов")
             if form.password.data.isdigit() or form.password.data.isalpha():
-                return render_template('register.html', title='Твоя профессия',
+                return render_template('register.html',
                                        form=form,
                                        message="Пароль должен состоять не только из букв или цифр")
             if not form.login.data or not form.name.data or not form.email.data:
@@ -150,7 +150,7 @@ def reqister():
             db = db_session.create_session()
             if db.query(User).filter(User.email == form.email.data).first() or \
                     db.query(User).filter(User.login == form.login.data).first():
-                return render_template('register.html', title='Твоя профессия',
+                return render_template('register.html',
                                        form=form,
                                        message="Такой пользователь уже существует")
             user = User(
@@ -164,7 +164,7 @@ def reqister():
             db.commit()
             login_user(user, remember=True)
             return redirect('/user_info')
-    return render_template('register.html', title='Твоя профессия', form=form)
+    return render_template('register.html', form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -176,14 +176,13 @@ def login():
         db = db_session.create_session()
         user = db.query(User).filter(User.login == login_form.login.data).first()
         if not user:
-            return render_template('login.html', form1=login_form, message1="Такого пользователя не существует",
-                                   title='Твоя профессия')
+            return render_template('login.html', form1=login_form, message1="Такого пользователя не существует")
         if user.check_password(login_form.password.data):
             login_user(user, remember=True)
             return redirect('/user_info')
         else:
-            return render_template('login.html', form1=login_form, message1="Неправильный пароль", title='Твоя профессия')
-    return render_template('login.html', title='Твоя профессия', form1=login_form)
+            return render_template('login.html', form1=login_form, message1="Неправильный пароль")
+    return render_template('login.html', form1=login_form)
 
 
 @app.route('/logout')
@@ -204,7 +203,8 @@ def user_info():
 def change():
     all_data = {
         'login': current_user.login,
-        'name': current_user.name
+        'name': current_user.name,
+        'email': current_user.email
     }
     change_form = ChangeForm(data=all_data)
     if change_form.validate_on_submit():
@@ -214,13 +214,17 @@ def change():
         if user_now.check_password(password):
             user_now.login = change_form.login.data
             user_now.name = change_form.name.data
+            emails = db.query(User).filter(User.email == change_form.email.data).all()
+            if len(emails) >= 2 and emails[0] != user_now.email:
+                return render_template('change.html', form=change_form,
+                                       message="Такая почта уже используется в другом аккаунте")
+            else:
+                user_now.email = change_form.email.data
             db.commit()
             return redirect('/user_info')
         else:
-            return render_template('change.html', form=change_form, message="Неправильный пароль",
-                                   title='Твоя профессия')
-    return render_template('change.html', form=change_form,
-                                   title='Твоя профессия')
+            return render_template('change.html', form=change_form, message="Неправильный пароль")
+    return render_template('change.html', form=change_form)
 
 
 @app.route('/add_timetable/<int:id>', methods=['GET', 'POST'])
@@ -335,7 +339,7 @@ def not_found(error):
     else:
         info = 'Anonymous'
     er_txt = '404 not found: Такого адреса не существует'
-    return render_template('error.html', title='Твоя профессия',
+    return render_template('error.html',
                            text=er_txt, useracc=info)
 
 
@@ -343,13 +347,13 @@ def not_found(error):
 @app.errorhandler(401)
 def unauth(error):
     er_txt = '401 not authorized: Пожалуйста, авторизуйтесь на сайте!'
-    return render_template('error.html', title='Твоя профессия', text=er_txt)
+    return render_template('error.html', text=er_txt)
 
 
 @app.errorhandler(500)
 def error_serv(error):
     er_text = 'Кажется, на сервере возникла ошибка. Выйдите на главную страницу и попробуйте снова'
-    return render_template('error.html', title='Твоя профессия', text=er_text)
+    return render_template('error.html', text=er_text)
 '''
 
 from os import path
