@@ -312,7 +312,7 @@ def add_homework(id):
             homework.day_of_week = homework_form.day_of_week.data
             homework.num_of_week = homework_form.num_of_week.data
             homework.ready = homework_form.ready.data
-            homework.file = homework_form.file.data
+            homework.file = 'nothing'
             current_user.homework.append(homework)
             db.merge(current_user)
             db.commit()
