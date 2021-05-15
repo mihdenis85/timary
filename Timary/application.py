@@ -245,6 +245,7 @@ def add_timetable(id):
         db = db_session.create_session()
         lesson = db.query(Timetable).filter(Timetable.lesson_id == int(id)).first()
         if not lesson or lesson.user != current_user:
+            db.close()
             return redirect('/')
         all_data = {
             'lesson': lesson.lesson,
@@ -259,7 +260,9 @@ def add_timetable(id):
             lesson.day_of_week = timetable_form.day_of_week.data
             lesson.num_of_week = timetable_form.num_of_week.data
             db.commit()
+            db.close()
             return redirect('/')
+        db.close()
         return render_template('add_timetable.html', form=timetable_form, deletion=True, id=id)
     else:
         timetable_form = TimetableForm()
@@ -273,6 +276,7 @@ def add_timetable(id):
             current_user.timetable.append(timetable)
             db.merge(current_user)
             db.commit()
+            db.close()
             return redirect('/')
         return render_template('add_timetable.html', form=timetable_form, deletion=False)
 
@@ -296,6 +300,7 @@ def add_homework(id):
         db = db_session.create_session()
         task = db.query(Homework).filter(Homework.homework_id == int(id)).first()
         if not task or task.user != current_user:
+            db.close()
             return redirect('/homework/0')
         all_data = {
             'task': task.task,
@@ -312,7 +317,9 @@ def add_homework(id):
             task.num_of_week = homework_form.num_of_week.data
             task.ready = homework_form.ready.data
             db.commit()
+            db.close()
             return redirect('/homework/0')
+        db.close()
         return render_template('add_homework.html', form=homework_form, deletion=True, id=id)
     else:
         homework_form = HomeworkForm()
@@ -328,6 +335,7 @@ def add_homework(id):
             current_user.homework.append(homework)
             db.merge(current_user)
             db.commit()
+            db.close()
             return redirect('/homework/0')
         return render_template('add_homework.html', form=homework_form, deletion=False)
 
