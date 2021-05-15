@@ -20,7 +20,6 @@ login_manager.init_app(app)
 def load_user(user_id):
     db = db_session.create_session()
     user = db.query(User).get(user_id)
-    db.close()
     return user
 
 
@@ -246,7 +245,6 @@ def add_timetable(id):
         db = db_session.create_session()
         lesson = db.query(Timetable).filter(Timetable.lesson_id == int(id)).first()
         if not lesson or lesson.user != current_user:
-            db.close()
             return redirect('/')
         all_data = {
             'lesson': lesson.lesson,
@@ -262,7 +260,6 @@ def add_timetable(id):
             lesson.num_of_week = timetable_form.num_of_week.data
             db.commit()
             return redirect('/')
-        db.close()
         return render_template('add_timetable.html', form=timetable_form, deletion=True, id=id)
     else:
         timetable_form = TimetableForm()
@@ -299,7 +296,6 @@ def add_homework(id):
         db = db_session.create_session()
         task = db.query(Homework).filter(Homework.homework_id == int(id)).first()
         if not task or task.user != current_user:
-            db.close()
             return redirect('/homework/0')
         all_data = {
             'task': task.task,
@@ -317,7 +313,6 @@ def add_homework(id):
             task.ready = homework_form.ready.data
             db.commit()
             return redirect('/homework/0')
-        db.close()
         return render_template('add_homework.html', form=homework_form, deletion=True, id=id)
     else:
         homework_form = HomeworkForm()
