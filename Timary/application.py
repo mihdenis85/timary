@@ -359,7 +359,6 @@ def error_serv(error):
 from os import path
 db_session.global_init(path.join(path.dirname(__file__), './db/project.db'))
 
-
 def run():
     port = int(os.environ.get('PORT', 8080))
     app.run(host='0.0.0.0', port=port, debug=True)

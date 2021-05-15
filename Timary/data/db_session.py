@@ -1,7 +1,9 @@
 import os
+import re
 import sqlalchemy
 from sqlalchemy import orm
 import sqlalchemy.ext.declarative as dec
+import psycopg2
 
 SqlAlchemyBase = dec.declarative_base()
 
@@ -19,6 +21,8 @@ def global_init(db_file):
 
     conn_str_sqlite = f'sqlite:///{db_file.strip()}?check_same_thread=False'
     conn_str = os.environ.get('DATABASE_URL', conn_str_sqlite)
+    if conn_str.startswith("postgres://"):
+        conn_str = conn_str.replace("postgres://", "postgresql://", 1)
     print(f'Подключение к базе данных по адресу {conn_str}')
 
     engine = sqlalchemy.create_engine(conn_str, echo=False)
