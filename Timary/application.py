@@ -19,7 +19,9 @@ login_manager.init_app(app)
 @login_manager.user_loader
 def load_user(user_id):
     db = db_session.create_session()
-    return db.query(User).get(user_id)
+    user = db.query(User).get(user_id)
+    db.close()
+    return user
 
 
 @app.route('/')
@@ -67,6 +69,7 @@ def index_start(num_of_week):
     elif num_of_week == '2':
         message_of_week = 'На неделе после следующей'
     if lessons:
+        db.close()
         return render_template('main.html', lessons=lessons, len_lesson=len(lessons), lessons1=lessons1, lessons2=lessons2,
                                lessons3=lessons3, lessons4=lessons4, lessons5=lessons5, lessons6=lessons6,
                                len_lesson1=len(lessons1), len_lesson2=len(lessons2), len_lesson3=len(lessons3),
@@ -74,6 +77,7 @@ def index_start(num_of_week):
                                num_of_week=num_of_week, next_num=next_num,
                                previous_num=previous_num, message_of_week=message_of_week)
     else:
+        db.close()
         return render_template('main.html', lessons=lessons, len_task=0, num_of_week=num_of_week,
                                next_num=next_num, previous_num=previous_num, message_of_week=message_of_week)
 
@@ -118,6 +122,7 @@ def homework(num_of_week):
     elif num_of_week == '2':
         message_of_week = 'На неделе после следующей'
     if tasks:
+        db.close()
         return render_template('homework.html', tasks=tasks, len_task=len(tasks), tasks1=tasks1, tasks2=tasks2,
                                tasks3=tasks3, tasks4=tasks4, tasks5=tasks5, tasks6=tasks6,
                                len_task1=len(tasks1), len_task2=len(tasks2), len_task3=len(tasks3),
@@ -125,6 +130,7 @@ def homework(num_of_week):
                                num_of_week=num_of_week, next_num=next_num,
                                previous_num=previous_num, message_of_week=message_of_week)
     else:
+        db.close()
         return render_template('homework.html', tasks=tasks, len_task=0, num_of_week=num_of_week,
                                next_num=next_num, previous_num=previous_num, message_of_week=message_of_week)
 
@@ -163,6 +169,7 @@ def reqister():
             db.add(user)
             db.commit()
             login_user(user, remember=True)
+            db.close()
             return redirect('/user_info')
     return render_template('register.html', form=form)
 
@@ -176,11 +183,14 @@ def login():
         db = db_session.create_session()
         user = db.query(User).filter(User.login == login_form.login.data).first()
         if not user:
+            db.close()
             return render_template('login.html', form1=login_form, message1="Такого пользователя не существует")
         if user.check_password(login_form.password.data):
             login_user(user, remember=True)
+            db.close()
             return redirect('/user_info')
         else:
+            db.close()
             return render_template('login.html', form1=login_form, message1="Неправильный пароль")
     return render_template('login.html', form1=login_form)
 
@@ -216,11 +226,13 @@ def change():
             user_now.name = change_form.name.data
             emails = db.query(User).filter(User.email == change_form.email.data).all()
             if len(emails) >= 2 and emails[0] != user_now.email:
+                db.close()
                 return render_template('change.html', form=change_form,
                                        message="Такая почта уже используется в другом аккаунте")
             else:
                 user_now.email = change_form.email.data
             db.commit()
+            db.close()
             return redirect('/user_info')
         else:
             return render_template('change.html', form=change_form, message="Неправильный пароль")
@@ -248,7 +260,9 @@ def add_timetable(id):
             lesson.day_of_week = timetable_form.day_of_week.data
             lesson.num_of_week = timetable_form.num_of_week.data
             db.commit()
+            db.close()
             return redirect('/')
+        db.close()
         return render_template('add_timetable.html', form=timetable_form, deletion=True, id=id)
     else:
         timetable_form = TimetableForm()
@@ -262,6 +276,7 @@ def add_timetable(id):
             current_user.timetable.append(timetable)
             db.merge(current_user)
             db.commit()
+            db.close()
             return redirect('/')
         return render_template('add_timetable.html', form=timetable_form, deletion=False)
 
@@ -274,6 +289,7 @@ def delete_timetable(id):
     if lesson and lesson.user == current_user:
         db.delete(lesson)
         db.commit()
+    db.close()
     return redirect('/')
 
 
@@ -300,7 +316,9 @@ def add_homework(id):
             task.num_of_week = homework_form.num_of_week.data
             task.ready = homework_form.ready.data
             db.commit()
+            db.close()
             return redirect('/homework/0')
+        db.close()
         return render_template('add_homework.html', form=homework_form, deletion=True, id=id)
     else:
         homework_form = HomeworkForm()
@@ -316,6 +334,7 @@ def add_homework(id):
             current_user.homework.append(homework)
             db.merge(current_user)
             db.commit()
+            db.close()
             return redirect('/homework/0')
         return render_template('add_homework.html', form=homework_form, deletion=False)
 
@@ -328,6 +347,7 @@ def delete_homework(id):
     if task and task.user == current_user:
         db.delete(task)
         db.commit()
+    db.close()
     return redirect('/homework/0')
 
 
