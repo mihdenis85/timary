@@ -310,8 +310,7 @@ def add_homework(id):
             'lesson': task.lesson,
             'day_of_week': task.day_of_week,
             'num_of_week': task.num_of_week,
-            'ready': task.ready,
-            'time': task.time
+            'ready': task.ready
         }
         homework_form = HomeworkForm(data=all_data)
         if homework_form.validate_on_submit():
@@ -320,7 +319,6 @@ def add_homework(id):
             task.day_of_week = homework_form.day_of_week.data
             task.num_of_week = homework_form.num_of_week.data
             task.ready = homework_form.ready.data
-            task.time = homework_form.time.data
             db.commit()
             db.close()
             return redirect('/homework/0')
@@ -337,7 +335,6 @@ def add_homework(id):
             homework.num_of_week = homework_form.num_of_week.data
             homework.ready = homework_form.ready.data
             homework.file = 'nothing'
-            homework.time = homework_form.time.data
             current_user.homework.append(homework)
             db.merge(current_user)
             db.commit()

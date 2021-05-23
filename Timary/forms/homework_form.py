@@ -12,5 +12,4 @@ class HomeworkForm(FlaskForm):
                                                               ('0', 'На этой неделе'), ('1', 'На следующей неделе'),
                                                               ('2', 'На неделе после следующей')], default='0')
     ready = StringField('Готовность', validators=[DataRequired()], render_kw={"placeholder": "Готовность"})
-    time = TimeField('Время')
     submit = SubmitField('Добавить/Изменить')
