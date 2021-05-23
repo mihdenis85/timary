@@ -23,6 +23,7 @@
         <th>Урок</th>
         <th>Кабинет</th>
         <th>Неделя</th>
+        <th>Время</th>
         <th>Изменить/удалить</th>
    </tr>
     {% if len_lesson1 == 0 %}
@@ -31,6 +32,7 @@
         <th> -</th>
         <th> -</th>
         <th> {{ message_of_week }}</th>
+        <th> -</th>
     </tr>
     {% else %}
     {% for i in range(len_lesson1) %}
@@ -41,6 +43,7 @@
         <th> {{ lessons1[i].lesson }}</th>
         <th> {{ lessons1[i].room }}</th>
         <th> {{ message_of_week }}</th>
+        <th> {{ lessons1[i].time }}</th>
         <th><a href="/add_timetable/{{ lessons1[i].lesson_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}
@@ -52,6 +55,7 @@
         <th> -</th>
         <th> -</th>
         <th> {{ message_of_week }}</th>
+        <th> -</th>
     </tr>
     {% else %}
     {% for i in range(len_lesson2) %}
@@ -62,6 +66,7 @@
         <th> {{ lessons2[i].lesson }}</th>
         <th> {{ lessons2[i].room }}</th>
         <th> {{ message_of_week }}</th>
+        <th> {{ lessons2[i].time }}</th>
         <th><a href="/add_timetable/{{ lessons2[i].lesson_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}
@@ -73,6 +78,7 @@
         <th> -</th>
         <th> -</th>
         <th> {{ message_of_week }}</th>
+        <th> -</th>
     </tr>
     {% else %}
     {% for i in range(len_lesson3) %}
@@ -83,6 +89,7 @@
         <th> {{ lessons3[i].lesson }}</th>
         <th> {{ lessons3[i].room }}</th>
         <th> {{ message_of_week }}</th>
+        <th> {{ lessons3[i].time }}</th>
         <th><a href="/add_timetable/{{ lessons3[i].lesson_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}
@@ -94,6 +101,7 @@
         <th> -</th>
         <th> -</th>
         <th> {{ message_of_week }}</th>
+        <th> -</th>
     </tr>
     {% else %}
     {% for i in range(len_lesson4) %}
@@ -104,6 +112,7 @@
         <th> {{ lessons4[i].lesson }}</th>
         <th> {{ lessons4[i].room }}</th>
         <th> {{ message_of_week }}</th>
+        <th> {{ lessons4[i].time }}</th>
         <th><a href="/add_timetable/{{ lessons4[i].lesson_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}
@@ -115,6 +124,7 @@
         <th> -</th>
         <th> -</th>
         <th> {{ message_of_week }}</th>
+        <th> -</th>
     </tr>
     {% else %}
     {% for i in range(len_lesson5) %}
@@ -125,6 +135,7 @@
         <th> {{ lessons5[i].lesson }}</th>
         <th> {{ lessons5[i].room }}</th>
         <th> {{ message_of_week }}</th>
+        <th> {{ lessons5[i].time }}</th>
         <th><a href="/add_timetable/{{ lessons5[i].lesson_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}
@@ -136,6 +147,7 @@
         <th> -</th>
         <th> -</th>
         <th> {{ message_of_week }}</th>
+        <th> -</th>
     </tr>
     {% else %}
     {% for i in range(len_lesson6) %}
@@ -146,6 +158,7 @@
         <th> {{ lessons6[i].lesson }}</th>
         <th> {{ lessons6[i].room }}</th>
         <th> {{ message_of_week }}</th>
+        <th> {{ lessons6[i].time }}</th>
         <th><a href="/add_timetable/{{ lessons6[i].lesson_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}

@@ -12,5 +12,6 @@ class Timetable(SqlAlchemyBase, SerializerMixin):
     room = Column(String)
     day_of_week = Column(String)
     num_of_week = Column(String)
+    time = Column(Time)
 
     user = orm.relation('User')

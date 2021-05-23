@@ -66,6 +66,13 @@
             {% endfor %}
             {{ form.ready(class="in-put", size="40") }}</h1>
             <hr width="100%" size="2" color="#000000" />
+
+            <hr width="100%" size="2" color="#000000" />
+            <h1>{% for error in form.time.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+            {{ form.time(class="in-put", size="40", type="time") }}</h1>
+            <hr width="100%" size="2" color="#000000" />
             <button class="btn btn-success" name="submit">Добавить</button>
         </form>
 

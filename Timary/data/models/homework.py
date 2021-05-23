@@ -15,5 +15,6 @@ class Homework(SqlAlchemyBase, SerializerMixin):
     num_of_week = Column(String)
     ready = Column(String)
     file = Column(String)
+    time = Column(Time)
 
     user = orm.relation('User')

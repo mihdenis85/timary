@@ -12,4 +12,5 @@ class TimetableForm(FlaskForm):
     num_of_week = SelectField('Выбор номера недели', choices=[('-2', '2 неделями ранее'), ('-1', '1 неделей ранее'),
                                                               ('0', 'На этой неделе'), ('1', 'На следующей неделе'),
                                                               ('2', 'На неделе после следующей')], default='0')
+    time = TimeField('Время')
     submit = SubmitField('Добавить/Изменить')

@@ -55,6 +55,12 @@
             {{ form.num_of_week(class="in-put") }}</h1>
             <hr width="100%" size="2" color="#000000" />
 
+            <h1>{% for error in form.time.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+            {{ form.time(class="in-put", type="time") }}</h1>
+            <hr width="100%" size="2" color="#000000" />
+
             <br>
 
             {{ form.submit(class="btn btn-success") }}

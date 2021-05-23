@@ -47,6 +47,7 @@
         <th>Задание</th>
         <th>Неделя</th>
         <th>Готово?</th>
+        <th>Время</th>
         <th>Изменить/удалить</th>
    </tr>
     {% if len_task1 == 0 %}
@@ -55,6 +56,7 @@
         <th> -</th>
         <th> -</th>
         <th> {{ message_of_week }}</th>
+        <th> -</th>
         <th> -</th>
     </tr>
     {% else %}
@@ -67,6 +69,7 @@
         <th> {{ tasks1[i].task }}</th>
         <th> {{ message_of_week }}</th>
         <th> {{ tasks1[i].ready }}</th>
+        <th> {{ tasks1[i].time }}</th>
         <th><a href="/add_homework/{{ tasks1[i].homework_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}
@@ -79,6 +82,7 @@
         <th> -</th>
         <th> {{ message_of_week }}</th>
         <th> -</th>
+        <th> -</th>
     </tr>
     {% else %}
     {% for i in range(len_task2) %}
@@ -90,6 +94,7 @@
         <th> {{ tasks2[i].task }}</th>
         <th> {{ message_of_week }}</th>
         <th> {{ tasks2[i].ready }}</th>
+        <th> {{ tasks2[i].time }}</th>
         <th><a href="/add_homework/{{ tasks2[i].homework_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}
@@ -102,6 +107,7 @@
         <th> -</th>
         <th> {{ message_of_week }}</th>
         <th> -</th>
+        <th> -</th>
     </tr>
     {% else %}
     {% for i in range(len_task3) %}
@@ -113,6 +119,7 @@
         <th> {{ tasks3[i].task }}</th>
         <th> {{ message_of_week }}</th>
         <th> {{ tasks3[i].ready }}</th>
+        <th> {{ tasks3[i].time }}</th>
         <th><a href="/add_homework/{{ tasks3[i].homework_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}
@@ -125,6 +132,7 @@
         <th> -</th>
         <th> {{ message_of_week }}</th>
         <th> -</th>
+        <th> -</th>
     </tr>
     {% else %}
     {% for i in range(len_task4) %}
@@ -136,6 +144,7 @@
         <th> {{ tasks4[i].task }}</th>
         <th> {{ message_of_week }}</th>
         <th> {{ tasks4[i].ready }}</th>
+        <th> {{ tasks4[i].time }}</th>
         <th><a href="/add_homework/{{ tasks4[i].homework_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}
@@ -148,6 +157,7 @@
         <th> -</th>
         <th> {{ message_of_week }}</th>
         <th> -</th>
+        <th> -</th>
     </tr>
     {% else %}
     {% for i in range(len_task5) %}
@@ -159,6 +169,7 @@
         <th> {{ tasks5[i].task }}</th>
         <th> {{ message_of_week }}</th>
         <th> {{ tasks5[i].ready }}</th>
+        <th> {{ tasks5[i].time }}</th>
         <th><a href="/add_homework/{{ tasks5[i].homework_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}
@@ -171,6 +182,7 @@
         <th> -</th>
         <th> {{ message_of_week }}</th>
         <th> -</th>
+        <th> -</th>
     </tr>
     {% else %}
     {% for i in range(len_task6) %}
@@ -182,6 +194,7 @@
         <th> {{ tasks6[i].task }}</th>
         <th> {{ message_of_week }}</th>
         <th> {{ tasks6[i].ready }}</th>
+        <th> {{ tasks6[i].time }}</th>
         <th><a href="/add_homework/{{ tasks6[i].homework_id }}"> Изменить</a></th>
    </tr>
     {% endfor %}

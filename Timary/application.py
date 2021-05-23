@@ -251,7 +251,8 @@ def add_timetable(id):
             'lesson': lesson.lesson,
             'room': lesson.room,
             'day_of_week': lesson.day_of_week,
-            'num_of_week': lesson.num_of_week
+            'num_of_week': lesson.num_of_week,
+            'time': lesson.time
         }
         timetable_form = TimetableForm(data=all_data)
         if timetable_form.validate_on_submit():
@@ -259,6 +260,7 @@ def add_timetable(id):
             lesson.room = timetable_form.room.data
             lesson.day_of_week = timetable_form.day_of_week.data
             lesson.num_of_week = timetable_form.num_of_week.data
+            lesson.time = timetable_form.time.data
             db.commit()
             db.close()
             return redirect('/')
@@ -273,6 +275,7 @@ def add_timetable(id):
             timetable.room = timetable_form.room.data
             timetable.day_of_week = timetable_form.day_of_week.data
             timetable.num_of_week = timetable_form.num_of_week.data
+            timetable.time = timetable_form.time.data
             current_user.timetable.append(timetable)
             db.merge(current_user)
             db.commit()
@@ -307,7 +310,8 @@ def add_homework(id):
             'lesson': task.lesson,
             'day_of_week': task.day_of_week,
             'num_of_week': task.num_of_week,
-            'ready': task.ready
+            'ready': task.ready,
+            'time': task.time
         }
         homework_form = HomeworkForm(data=all_data)
         if homework_form.validate_on_submit():
@@ -316,6 +320,7 @@ def add_homework(id):
             task.day_of_week = homework_form.day_of_week.data
             task.num_of_week = homework_form.num_of_week.data
             task.ready = homework_form.ready.data
+            task.time = homework_form.time.data
             db.commit()
             db.close()
             return redirect('/homework/0')
@@ -332,6 +337,7 @@ def add_homework(id):
             homework.num_of_week = homework_form.num_of_week.data
             homework.ready = homework_form.ready.data
             homework.file = 'nothing'
+            homework.time = homework_form.time.data
             current_user.homework.append(homework)
             db.merge(current_user)
             db.commit()
